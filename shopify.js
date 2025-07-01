@@ -1,7 +1,7 @@
 // shopify.js con corrección del error "options: expected Array to be a Hash"
 import axios from 'axios';
-import dotenv from 'dotenv';
-dotenv.config();
+//import dotenv from 'dotenv';
+//dotenv.config();
 
 const {
   SHOPIFY_STORE_DOMAIN,
