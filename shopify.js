@@ -1,7 +1,9 @@
-// shopify.js con corrección del error "options: expected Array to be a Hash"
-import axios from 'axios';
-//import dotenv from 'dotenv';
-//dotenv.config();
+// shopify.js actualizado para funcionar en Railway y local
+
+// Solo cargar dotenv en desarrollo
+if (process.env.NODE_ENV !== 'production') {
+  import('dotenv').then(dotenv => dotenv.config());
+}
 
 const {
   SHOPIFY_STORE_DOMAIN,
@@ -12,6 +14,8 @@ const {
 if (!SHOPIFY_STORE_DOMAIN || !SHOPIFY_API_VERSION || !SHOPIFY_API_PASSWORD) {
   throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
 }
+
+import axios from 'axios';
 
 const shopifyAPI = axios.create({
   baseURL: `https://${SHOPIFY_STORE_DOMAIN}/admin/api/${SHOPIFY_API_VERSION}`,
