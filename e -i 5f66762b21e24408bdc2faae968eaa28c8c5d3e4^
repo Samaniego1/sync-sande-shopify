@@ -1,0 +1,12 @@
+[33m7a1ac07467692fc77670b96adf1a785d164289df[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m 🔥 remove .env file and add to .gitignore
+[33m5f66762b21e24408bdc2faae968eaa28c8c5d3e4[m fixing finally done
+[33mc30de202327bd7391ba6d802d7ce5615854a5ded[m[33m ([m[1;31morigin/master[m[33m)[m removing some files
+[33mcd5846309be2d59b4cbf11e017c68cc7ea87380b[m more changes to fix problems
+[33m5f27a1407d95f6b0b72ca7f33b9910f2cea8b7cf[m more changes
+[33ma79bf066f896a8f50b213adec540b22d085d5018[m removing dotenv
+[33mf8a6d2cf743dae2dabbb69defa65b8d26bf23feb[m fixing problems rejected
+[33m73ec78a4f046365243896930afb46883523f46c7[m more changes
+[33m04cf24bc268449821e171a8e91bb446114baba9e[m fixing some mistakes
+[33m839339d24a9a6c5f79d6461284a6611989f8a564[m fix: agrega engines para node >=18
+[33m4c809b731541d73cd65094869c678d9c2db9efa2[m Agrego handler de cron en /api/sync.js
+[33m5faa8e60fc6caeee6bd903ac7fd78720c095f67b[m Proyecto inicial de sincronización

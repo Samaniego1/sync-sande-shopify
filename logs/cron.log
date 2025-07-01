@@ -1,0 +1,182 @@
+zsh: command not found: 0
+node:fs:2344
+    return binding.writeFileUtf8(
+                   ^
+
+Error: ENOENT: no such file or directory, open 'logs/sync-2025-06-17.txt'
+    at Object.writeFileSync (node:fs:2344:20)
+    at Object.appendFileSync (node:fs:2426:6)
+    at logLinea (file:///home/samaniego10/code/sync-sande-shopify/sync.js:35:6)
+    at sincronizarProductos (file:///home/samaniego10/code/sync-sande-shopify/sync.js:161:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'logs/sync-2025-06-17.txt'
+}
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:12:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:13
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:13:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:13
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:13:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:13
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:13:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
+file:///home/samaniego10/code/sync-sande-shopify/shopify.js:13
+  throw new Error('🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)');
+        ^
+
+Error: 🔴 Faltan variables de entorno Shopify (STORE_DOMAIN/API_VERSION/API_PASSWORD)
+    at file:///home/samaniego10/code/sync-sande-shopify/shopify.js:13:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.12.0
