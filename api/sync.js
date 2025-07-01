@@ -1,5 +1,3 @@
-// /api/sync.js
-
 import { runSync } from '../sync.js';
 
 export default async function handler(req, res) {
