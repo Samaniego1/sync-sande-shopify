@@ -193,10 +193,15 @@ if (
   process.env.RAILWAY_ENVIRONMENT_NAME
 ) {
   console.log('🚀 Ejecutando sincronización en Railway...');
-  runSync().catch(e => {
-    console.error('❌ Error en Railway:', e);
-    process.exit(1);
-  });
+  runSync()
+    .then(() => {
+      console.log('✅ Sync finalizado correctamente');
+      process.exit(0); // <- MUY IMPORTANTE para evitar correos de error
+    })
+    .catch(e => {
+      console.error('❌ Error en Railway:', e);
+      process.exit(1);
+    });
 } else {
   console.log('⛔ Sync bloqueado: no estás en Railway');
 }
