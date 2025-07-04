@@ -94,7 +94,7 @@ const callWithRetry = async (fn, args, sku, attempt = 1) => {
     if (err.response?.status === 429 && attempt <= MAX_RETRIES) {
       const wait = BACKOFF_BASE * Math.pow(2, attempt - 1);
       console.log(`⏱️ 429 sku=${sku}, retry en ${wait}ms intento ${attempt}`);
-      await delay(wait + 500);
+      await delay(wait + 700);
       return callWithRetry(fn, args, sku, attempt + 1);
     }
     throw err;
