@@ -196,11 +196,11 @@ if (
   runSync()
     .then(() => {
       console.log('✅ Sync finalizado correctamente');
-      process.exit(0); // <- MUY IMPORTANTE para evitar correos de error
+      process.exit(0); // << esto evita los mails de crash
     })
     .catch(e => {
       console.error('❌ Error en Railway:', e);
-      process.exit(1);
+      process.exit(1); // << esto sí enviaría un mail real si falla
     });
 } else {
   console.log('⛔ Sync bloqueado: no estás en Railway');
