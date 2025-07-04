@@ -188,9 +188,15 @@ export async function runSync() {
 }
 
 // si se corre directamente
-if (process.argv[1] === new URL(import.meta.url).pathname) {
+if (
+  process.argv[1] === new URL(import.meta.url).pathname &&
+  process.env.RAILWAY_ENVIRONMENT_NAME
+) {
+  console.log('🚀 Ejecutando sincronización en Railway...');
   runSync().catch(e => {
-    console.error('❌ Error en ejecución directa:', e);
+    console.error('❌ Error en Railway:', e);
     process.exit(1);
   });
+} else {
+  console.log('⛔ Sync bloqueado: no estás en Railway');
 }
