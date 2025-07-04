@@ -14,9 +14,10 @@ import {
 } from './shopify.js';
 
 const { EXTERNAL_API_URL } = process.env;
-const CONCURRENCY = 2;
+const CONCURRENCY = 1;
+const SHOPIFY_DELAY_MS = 1100;
 const MAX_RETRIES = 5;
-const BACKOFF_BASE = 2000;
+const BACKOFF_BASE = 3000;
 const LOG_DIR = './logs';
 
 if (!fs.existsSync(LOG_DIR)) fs.mkdirSync(LOG_DIR);
@@ -88,7 +89,7 @@ const normalizarProductos = (lista) => {
 
 const callWithRetry = async (fn, args, sku, attempt = 1) => {
   try {
-    await delay(500);
+    await delay(SHOPIFY_DELAY_MS);
     return await fn(...args);
   } catch (err) {
     if (err.response?.status === 429 && attempt <= MAX_RETRIES) {
@@ -184,10 +185,16 @@ export async function runSync() {
     productos: descartes
   });
 
+  if (descartes.length > 0) {
+    console.log('🟠 Productos descartados:');
+    descartes.forEach(d => {
+      console.log(`🔸 SKU=${d.sku} | Motivo=${d.motivo}`);
+    });
+  }
+
   return { resultados, eliminados: eliminarIds.length };
 }
 
-// si se corre directamente
 if (
   process.argv[1] === new URL(import.meta.url).pathname &&
   process.env.RAILWAY_ENVIRONMENT_NAME
@@ -196,11 +203,11 @@ if (
   runSync()
     .then(() => {
       console.log('✅ Sync finalizado correctamente');
-      process.exit(0); // << esto evita los mails de crash
+      process.exit(0);
     })
     .catch(e => {
       console.error('❌ Error en Railway:', e);
-      process.exit(1); // << esto sí enviaría un mail real si falla
+      process.exit(1);
     });
 } else {
   console.log('⛔ Sync bloqueado: no estás en Railway');
