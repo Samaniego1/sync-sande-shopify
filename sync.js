@@ -90,17 +90,23 @@ const normalizarProductos = (lista) => {
 const callWithRetry = async (fn, args, sku, attempt = 1) => {
   try {
     await delay(SHOPIFY_DELAY_MS);
-    return await fn(...args);
+    const result = await fn(...args);
+    await delay(SHOPIFY_DELAY_MS);
+    return result;
   } catch (err) {
-    if (err.response?.status === 429 && attempt <= MAX_RETRIES) {
+    const status = err.response?.status;
+
+    if ((status === 429 || status === 502) && attempt <= MAX_RETRIES) {
       const wait = BACKOFF_BASE * Math.pow(2, attempt - 1);
-      console.log(`⏱️ 429 sku=${sku}, retry en ${wait}ms intento ${attempt}`);
+      console.warn(`⏱️ Retry SKU=${sku} | status=${status} | intento ${attempt} | espera ${wait}ms`);
       await delay(wait + 700);
       return callWithRetry(fn, args, sku, attempt + 1);
     }
-    throw err;
+
+    throw err; // esta excepción será atrapada donde se use callWithRetry
   }
 };
+
 
 const obtenerProductosDesdeAPI = async () => {
   const res = await axios.get(EXTERNAL_API_URL);
@@ -166,9 +172,15 @@ export async function runSync() {
     .map(([, v]) => v.id);
 
   for (const id of eliminarIds) {
-    await eliminarProducto(id);
+  try {
+    await callWithRetry(eliminarProducto, [id], 'eliminado');
     logs.push({ sku: 'desconocido', id, action: 'eliminado' });
+  } catch (err) {
+    console.error(`❌ Error al eliminar producto ID=${id}:`, err.message);
+    logs.push({ sku: 'desconocido', id, action: 'error', error: err.message });
   }
+}
+
 
   console.log('📊 Resumen:', resultados);
   console.log(`Eliminados: ${eliminarIds.length}`);
