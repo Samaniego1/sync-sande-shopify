@@ -62,12 +62,28 @@ const normalizarProductos = (lista) => {
     const stock = parseInt(data.stock || '0', 10);
     const inventory_quantity = isNaN(stock) || stock < 0 ? 0 : stock;
 
+    // Tag extra basado en primeras 3 palabras del descripProd
+    const tagDescrip = data.descripProd
+      ? data.descripProd
+          .trim()
+          .split(/\s+/)
+          .slice(0, 3)
+          .map(w => w.toUpperCase())
+          .join(' ')
+      : null;
+
     productosUnicos[sku] = {
       sku,
       title: data.descripProd?.trim() || '',
       body_html: `<p>${data.descripProd?.trim() || ''}</p>`,
       vendor: data.marca?.trim() || '',
-      tags: [data.categoria, data.seccion, data.marca, data.unidad]
+      tags: [
+        `CATEGORIA_${data.categoria}`,
+        `SECCION_${data.seccion}`,
+        `MARCA_${data.marca}`,
+        `UNIDAD_${data.unidad}`,
+        tagDescrip
+      ]
         .filter(Boolean)
         .map(s => s.trim().toUpperCase())
         .join(', '),
@@ -106,7 +122,6 @@ const callWithRetry = async (fn, args, sku, attempt = 1) => {
     throw err; // esta excepción será atrapada donde se use callWithRetry
   }
 };
-
 
 const obtenerProductosDesdeAPI = async () => {
   const res = await axios.get(EXTERNAL_API_URL);
@@ -172,15 +187,14 @@ export async function runSync() {
     .map(([, v]) => v.id);
 
   for (const id of eliminarIds) {
-  try {
-    await callWithRetry(eliminarProducto, [id], 'eliminado');
-    logs.push({ sku: 'desconocido', id, action: 'eliminado' });
-  } catch (err) {
-    console.error(`❌ Error al eliminar producto ID=${id}:`, err.message);
-    logs.push({ sku: 'desconocido', id, action: 'error', error: err.message });
+    try {
+      await callWithRetry(eliminarProducto, [id], 'eliminado');
+      logs.push({ sku: 'desconocido', id, action: 'eliminado' });
+    } catch (err) {
+      console.error(`❌ Error al eliminar producto ID=${id}:`, err.message);
+      logs.push({ sku: 'desconocido', id, action: 'error', error: err.message });
+    }
   }
-}
-
 
   console.log('📊 Resumen:', resultados);
   console.log(`Eliminados: ${eliminarIds.length}`);
