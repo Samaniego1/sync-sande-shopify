@@ -1,4 +1,4 @@
-// sync.js - script principal que se puede ejecutar o importar
+// sync.js - actualizado con tags específicos y vendor desde marca
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -62,31 +62,33 @@ const normalizarProductos = (lista) => {
     const stock = parseInt(data.stock || '0', 10);
     const inventory_quantity = isNaN(stock) || stock < 0 ? 0 : stock;
 
-    // Tag extra basado en primeras 3 palabras del descripProd
-    const tagDescrip = data.descripProd
+    // Tags: seccion, categoria, primeras 2 palabras de descripProd, marca
+    const tagDescrip2 = data.descripProd
       ? data.descripProd
           .trim()
           .split(/\s+/)
-          .slice(0, 3)
+          .slice(0, 2)
           .map(w => w.toUpperCase())
           .join(' ')
       : null;
+
+    const tags = [
+      data.seccion,
+      data.categoria,
+      tagDescrip2,
+      data.marca
+    ]
+    .filter(Boolean)
+    .map(s => s.trim().toUpperCase())
+    .filter((value, index, self) => self.indexOf(value) === index) // elimina duplicados
+    .join(', ');
 
     productosUnicos[sku] = {
       sku,
       title: data.descripProd?.trim() || '',
       body_html: `<p>${data.descripProd?.trim() || ''}</p>`,
-      vendor: data.marca?.trim() || '',
-      tags: [
-        `CATEGORIA_${data.categoria}`,
-        `SECCION_${data.seccion}`,
-        `MARCA_${data.marca}`,
-        `UNIDAD_${data.unidad}`,
-        tagDescrip
-      ]
-        .filter(Boolean)
-        .map(s => s.trim().toUpperCase())
-        .join(', '),
+      vendor: data.marca?.trim() || '', // Proveedor correcto en Shopify
+      tags,
       images: data.foto && data.foto.trim() !== ''
         ? [{ src: encodeURI(data.foto.replace(/\\/g, '/')) }]
         : undefined,
@@ -119,7 +121,7 @@ const callWithRetry = async (fn, args, sku, attempt = 1) => {
       return callWithRetry(fn, args, sku, attempt + 1);
     }
 
-    throw err; // esta excepción será atrapada donde se use callWithRetry
+    throw err;
   }
 };
 
@@ -170,7 +172,7 @@ export async function runSync() {
     try {
       const r = await procesar(p, shopifyDict, descartes);
       resultados[r.action]++;
-      logs.push({ sku: p.sku, action: r.action });
+      logs.push({ sku: p.sku, action: r.action, tags: p.tags });
     } catch (err) {
       console.error(`❌ SKU=${p.sku} ->`, err.message);
       resultados.error++;
