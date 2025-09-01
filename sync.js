@@ -1,4 +1,4 @@
-// sync.js - actualizado: tags solo desde sección y categoría, vendor = marca
+// sync.js - con filtro por stockSt y tags solo de seccion y categoria
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -54,15 +54,26 @@ const guardarLogRotativo = (nombreBase, objeto, maxArchivos = 5) => {
 
 const normalizarProductos = (lista) => {
   const productosUnicos = {};
+
   for (const data of lista) {
+    const stock = parseInt(data.stock || '0', 10);
+    const stockSt = (data.stockSt || '').trim().toUpperCase();
+
+    // FILTRAR según condiciones
+    const visible =
+      stockSt === 'A' ||
+      stockSt === 'C' ||
+      (stockSt === 'I' && stock > 0) ||
+      (stockSt === 'D' && stock > 0);
+
+    if (!visible) continue;
+
     const sku = data.codigos?.trim();
     if (!sku || productosUnicos[sku]) continue;
 
     const precio = parsePrecio(data.precio);
-    const stock = parseInt(data.stock || '0', 10);
     const inventory_quantity = isNaN(stock) || stock < 0 ? 0 : stock;
 
-    // Tags: solo sección y categoría
     const tags = [
       data.seccion,
       data.categoria
@@ -91,6 +102,7 @@ const normalizarProductos = (lista) => {
       options: ['Title']
     };
   }
+
   return Object.values(productosUnicos);
 };
 
@@ -147,7 +159,7 @@ const procesar = async (producto, shopifyDict, descartes) => {
 
 export async function runSync() {
   const apiList = await obtenerProductosDesdeAPI();
-  console.log(`Inicio sync: ${apiList.length} productos API`);
+  console.log(`Inicio sync: ${apiList.length} productos válidos para procesar`);
 
   const shopifyDict = await productosShopifyPorSKU();
   console.log(`Shopify tiene ${Object.keys(shopifyDict).length} SKUs`);
