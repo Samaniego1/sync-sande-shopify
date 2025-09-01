@@ -1,4 +1,4 @@
-// sync.js - actualizado con tags específicos y vendor desde marca
+// sync.js - actualizado: tags solo desde sección y categoría, vendor = marca
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -62,32 +62,21 @@ const normalizarProductos = (lista) => {
     const stock = parseInt(data.stock || '0', 10);
     const inventory_quantity = isNaN(stock) || stock < 0 ? 0 : stock;
 
-    // Tags: seccion, categoria, primeras 2 palabras de descripProd, marca
-    const tagDescrip2 = data.descripProd
-      ? data.descripProd
-          .trim()
-          .split(/\s+/)
-          .slice(0, 2)
-          .map(w => w.toUpperCase())
-          .join(' ')
-      : null;
-
+    // Tags: solo sección y categoría
     const tags = [
       data.seccion,
-      data.categoria,
-      tagDescrip2,
-      data.marca
+      data.categoria
     ]
     .filter(Boolean)
     .map(s => s.trim().toUpperCase())
-    .filter((value, index, self) => self.indexOf(value) === index) // elimina duplicados
+    .filter((value, index, self) => self.indexOf(value) === index)
     .join(', ');
 
     productosUnicos[sku] = {
       sku,
       title: data.descripProd?.trim() || '',
       body_html: `<p>${data.descripProd?.trim() || ''}</p>`,
-      vendor: data.marca?.trim() || '', // Proveedor correcto en Shopify
+      vendor: data.marca?.trim() || '',
       tags,
       images: data.foto && data.foto.trim() !== ''
         ? [{ src: encodeURI(data.foto.replace(/\\/g, '/')) }]
