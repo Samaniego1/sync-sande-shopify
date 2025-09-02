@@ -1,4 +1,4 @@
-// sync.js - con filtro [A,C,I,D] limpio y tags desde sección y categoría
+// sync.js - limpio, solo se usa "stock" y "stockSt", con tags de seccion y categoria
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -58,19 +58,16 @@ const normalizarProductos = (lista) => {
 
   for (const data of lista) {
     const stock = parseInt(data.stock || '0', 10);
+    if (isNaN(stock)) continue;
 
-    // Limpia corchetes como "[A]" → "A"
-    const stockSt = (data.stockSt || '')
-      .replace(/[\[\]]/g, '')
-      .trim()
-      .toUpperCase();
+    const stockSt = (data.stockSt || '').replace(/[\[\]]/g, '').trim().toUpperCase();
 
-    // FILTRAR según condiciones válidas
-    const visible =
+    const visible = (
       stockSt === 'A' ||
       stockSt === 'C' ||
       (stockSt === 'I' && stock > 0) ||
-      (stockSt === 'D' && stock > 0);
+      (stockSt === 'D' && stock > 0)
+    );
 
     if (!visible) {
       console.log(`⛔ DESCARTADO - SKU: ${data.codigos} | stockSt: ${stockSt} | stock: ${stock}`);
@@ -81,16 +78,13 @@ const normalizarProductos = (lista) => {
     if (!sku || productosUnicos[sku]) continue;
 
     const precio = parsePrecio(data.precio);
-    const inventory_quantity = isNaN(stock) || stock < 0 ? 0 : stock;
+    const inventory_quantity = stock >= 0 ? stock : 0;
 
-    const tags = [
-      data.seccion,
-      data.categoria
-    ]
-    .filter(Boolean)
-    .map(s => s.trim().toUpperCase())
-    .filter((value, index, self) => self.indexOf(value) === index)
-    .join(', ');
+    const tags = [data.seccion, data.categoria]
+      .filter(Boolean)
+      .map(s => s.trim().toUpperCase())
+      .filter((v, i, self) => self.indexOf(v) === i)
+      .join(', ');
 
     productosUnicos[sku] = {
       sku,
@@ -124,14 +118,12 @@ const callWithRetry = async (fn, args, sku, attempt = 1) => {
     return result;
   } catch (err) {
     const status = err.response?.status;
-
     if ((status === 429 || status === 502) && attempt <= MAX_RETRIES) {
       const wait = BACKOFF_BASE * Math.pow(2, attempt - 1);
-      console.warn(`⏱️ Retry SKU=${sku} | status=${status} | intento ${attempt} | espera ${wait}ms`);
-      await delay(wait + 700);
+      console.warn(`⏱️ Retry SKU=${sku} | intento ${attempt} | espera ${wait}ms`);
+      await delay(wait + 500);
       return callWithRetry(fn, args, sku, attempt + 1);
     }
-
     throw err;
   }
 };
@@ -139,7 +131,7 @@ const callWithRetry = async (fn, args, sku, attempt = 1) => {
 const obtenerProductosDesdeAPI = async () => {
   const res = await axios.get(EXTERNAL_API_URL);
   const list = res.data.listarProductos;
-  if (!Array.isArray(list)) throw new Error('Formato inesperado de API externa');
+  if (!Array.isArray(list)) throw new Error('⚠️ Formato inesperado de API externa');
   return normalizarProductos(list);
 };
 
@@ -148,7 +140,7 @@ const procesar = async (producto, shopifyDict, descartes) => {
   const existente = shopifyDict[sku];
   try {
     if (producto.variants[0].price === '0.00') {
-      throw new Error('Precio no válido para creación');
+      throw new Error('💸 Precio no válido para creación');
     }
     if (existente) {
       const igual = JSON.stringify(producto) === JSON.stringify(existente.fuente);
