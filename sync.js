@@ -1,4 +1,4 @@
-// sync.js - con filtro por stockSt y tags solo de seccion y categoria
+// sync.js - con filtro [A,C,I,D] limpio y tags desde sección y categoría
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -54,19 +54,28 @@ const guardarLogRotativo = (nombreBase, objeto, maxArchivos = 5) => {
 
 const normalizarProductos = (lista) => {
   const productosUnicos = {};
+  console.log(`🔍 Recibidos de API: ${lista.length} productos`);
 
   for (const data of lista) {
     const stock = parseInt(data.stock || '0', 10);
-    const stockSt = (data.stockSt || '').trim().toUpperCase();
 
-    // FILTRAR según condiciones
+    // Limpia corchetes como "[A]" → "A"
+    const stockSt = (data.stockSt || '')
+      .replace(/[\[\]]/g, '')
+      .trim()
+      .toUpperCase();
+
+    // FILTRAR según condiciones válidas
     const visible =
       stockSt === 'A' ||
       stockSt === 'C' ||
       (stockSt === 'I' && stock > 0) ||
       (stockSt === 'D' && stock > 0);
 
-    if (!visible) continue;
+    if (!visible) {
+      console.log(`⛔ DESCARTADO - SKU: ${data.codigos} | stockSt: ${stockSt} | stock: ${stock}`);
+      continue;
+    }
 
     const sku = data.codigos?.trim();
     if (!sku || productosUnicos[sku]) continue;
@@ -103,6 +112,7 @@ const normalizarProductos = (lista) => {
     };
   }
 
+  console.log(`✅ Productos después del filtro: ${Object.keys(productosUnicos).length}`);
   return Object.values(productosUnicos);
 };
 
